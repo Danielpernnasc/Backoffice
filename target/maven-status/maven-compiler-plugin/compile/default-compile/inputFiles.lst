@@ -1,0 +1,11 @@
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\User\User.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Controller\UserController.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Service\CustomUserDetailsService.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Controller\AuthController.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Security\JwtUtil.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Dto\LoginRequest.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Filter\JwtAuthenticationFilter.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\BackOfficeApplication.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Security\SecurityConfig.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Service\UserService.java
+C:\Users\Daniel\Desktop\DesafioSantBackFRont\backoffice\src\main\java\com\test\Repository\UserRepository.java
