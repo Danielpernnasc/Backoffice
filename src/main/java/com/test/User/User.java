@@ -13,7 +13,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name; // 🔹 usar "name" para ficar igual ao DTO
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -25,14 +25,14 @@ public class User {
 
     // Getters
     public Long getId() { return id; }
-    public String getNome() { return nome; }
+    public String getName() { return name; }
     public String getEmail() { return email; }
     public String getSenha() { return senha; }
     public String getRole() { return role; }
 
     // Setters
     public void setId(Long id) { this.id = id; }
-    public void setNome(String nome) { this.nome = nome; }
+    public void setName(String name) { this.name = name; }
     public void setEmail(String email) { this.email = email; }
     public void setSenha(String senha) { this.senha = senha; }
     public void setRole(String role) { this.role = role; }

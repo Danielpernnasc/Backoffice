@@ -1,45 +1,62 @@
-package com.test.Service;
-import org.springframework.stereotype.Service;
+package com.test.service;
 
-import com.test.Repository.UserRepository;
 import com.test.User.User;
+import com.test.Repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository repo;
 
-    public UserService(UserRepository repo) { this.repo = repo; }
+    private final UserRepository userRepository;
 
-    public List<User> listAll() { return repo.findAll(); }
-    public Optional<User> findById(Long id) { return repo.findById(id); }
-    public User create(User u) { 
-        // hash de senha deveria ser feito aqui
-        return repo.save(u);
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
-    public User update(Long id, User partial) {
-        return repo.findById(id).map(existing -> {
-            existing.setNome(partial.getNome() != null ? partial.getNome() : existing.getNome());
-            existing.setEmail(partial.getEmail() != null ? partial.getEmail() : existing.getEmail());
-            if (partial.getSenha() != null) existing.setSenha(partial.getSenha());
-            existing.setRole(partial.getRole() != null ? partial.getRole() : existing.getRole());
-            return repo.save(existing);
-        }).orElseThrow(() -> new RuntimeException("User not found"));
-    }
-    public void delete(Long id) { repo.deleteById(id); }
 
+    // Criar usuário
+    public User register(String name, String email, String senha) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new IllegalArgumentException("Email já cadastrado!");
+        }
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setSenha(senha); // para produção use PasswordEncoder
+        user.setRole("USER");
+        return userRepository.save(user);
+    }
+
+    // Listar todos
     public List<User> getAllUsers() {
-
-        return List.of(); 
-
+        return userRepository.findAll();
     }
 
+    // Buscar por id
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    // Buscar por email (ajustado!)
     public Optional<User> findByEmail(String email) {
-        return repo.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
-  
+    // Atualizar
+    public User update(Long id, User dto) {
+        User existing = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+        existing.setName(dto.getName());
+        existing.setEmail(dto.getEmail());
+        existing.setRole(dto.getRole());
+        return userRepository.save(existing);
+    }
 
+    // Deletar
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
+

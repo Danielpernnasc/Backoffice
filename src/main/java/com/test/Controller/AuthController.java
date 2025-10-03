@@ -1,4 +1,4 @@
-package com.test.Controller;
+package com.test.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.test.Dto.LoginRequest;
 import com.test.User.User;
-import com.test.Service.UserService;
 import com.test.Util.JwtUtil;
+import com.test.service.UserService;
 
 @RestController
 @RequestMapping("/auth")

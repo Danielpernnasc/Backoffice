@@ -2,6 +2,7 @@ package com.test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -9,6 +10,7 @@ import com.test.Repository.UserRepository;
 import com.test.User.User;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.test", "com.test.controller"})
 public class BackOfficeApplication implements CommandLineRunner {
 
     private final UserRepository userRepository;
@@ -27,7 +29,7 @@ public class BackOfficeApplication implements CommandLineRunner {
         if (userRepository.findByEmail("admin@email.com").isEmpty()) {
             User admin = new User();
             admin.setEmail("admin@email.com");
-            admin.setNome("Admin");
+            admin.setName("Admin");
             admin.setSenha(encoder.encode("123456"));
             admin.setRole("ADMIN");
             userRepository.save(admin);
