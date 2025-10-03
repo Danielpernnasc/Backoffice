@@ -1,0 +1,8 @@
+com\test\BackOfficeApplication.class
+com\test\service\UserService.class
+com\test\controller\LoginController.class
+com\test\models\User.class
+com\test\security\SecurityConfig.class
+com\test\repository\UserRepository.class
+com\test\controller\UserController.class
+com\test\controller\HomeController.class
