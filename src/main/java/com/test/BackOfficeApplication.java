@@ -2,27 +2,38 @@ package com.test;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.test.Repository.UserRepository;
+import com.test.User.User;
 
 @SpringBootApplication
-public class BackOfficeApplication {
+public class BackOfficeApplication implements CommandLineRunner {
 
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
+
+    public BackOfficeApplication(UserRepository userRepository, PasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
     public static void main(String[] args) {
         SpringApplication.run(BackOfficeApplication.class, args);
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // todas as rotas
-                        .allowedOrigins("http://localhost:4200") // seu front
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*");
-            }
-        };
+    @Override
+    public void run(String... args) throws Exception {
+        if (userRepository.findByEmail("admin@email.com").isEmpty()) {
+            User admin = new User();
+            admin.setEmail("admin@email.com");
+            admin.setNome("Admin");
+            admin.setSenha(encoder.encode("123456"));
+            admin.setRole("ADMIN");
+            userRepository.save(admin);
+            System.out.println("Admin criado com sucesso!");
+        }
     }
 }
+
+

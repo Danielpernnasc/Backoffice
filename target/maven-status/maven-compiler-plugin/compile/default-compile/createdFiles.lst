@@ -2,12 +2,13 @@ com\test\BackOfficeApplication.class
 com\test\Controller\UserController.class
 com\test\Controller\AuthController.class
 com\test\Dto\LoginRequest.class
-com\test\Security\JwtUtil.class
+com\test\Security\SecurityBeans.class
 com\test\Security\SecurityConfig.class
-com\test\Service\CustomUserDetailsService.class
-com\test\User\User$UserBuilder.class
 com\test\Repository\UserRepository.class
 com\test\User\User.class
-com\test\BackOfficeApplication$1.class
+com\test\Filter\JwtFilter.class
+com\test\Dto\LoginResponse.class
+com\test\Controller\AuthController$TokenResponse.class
 com\test\Filter\JwtAuthenticationFilter.class
+com\test\Util\JwtUtil.class
 com\test\Service\UserService.class

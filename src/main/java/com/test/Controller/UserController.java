@@ -1,55 +1,66 @@
 package com.test.Controller;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import com.test.Service.UserService;
 import com.test.User.User;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
     private final UserService service;
+
     public UserController(UserService service) {
         this.service = service;
     }
 
+    // LIST
     @GetMapping
-    public List<User> getAll(){
-        return service.getAllUsers();
+    public List<User> getAll() {
+        return service.listAll();
     }
 
+    // GET by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id){
-        return service.getUserById(id)
+    public ResponseEntity<User> getById(@PathVariable Long id) {
+        return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // CREATE
     @PostMapping
-    public User create(@RequestBody User user){
-        return service.createUser(user);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User created = service.create(user);
+        return ResponseEntity
+                .created(URI.create("/users/" + created.getId()))
+                .body(created);
     }
 
+    // UPDATE
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user){
-        return service.updateUser(id, user);
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+        try {
+            User updated = service.update(id, user);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-    
 
+    // DELETE
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        service.deleteUser(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            service.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-    
 }
